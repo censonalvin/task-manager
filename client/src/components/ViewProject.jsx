@@ -34,7 +34,7 @@ const ViewProject = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await fetch(
-          `https://task-manager-9a28.vercel.app/api/projects/${projectId}`,
+          `https://task-manager-api-18no.onrender.com/api/projects/${projectId}`,
           {
             headers: {
           'Access-Control-Allow-Headers':
@@ -66,7 +66,7 @@ const ViewProject = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `https://task-manager-9a28.vercel.app/api/projects/${projectId}/add-user`,
+        `https://task-manager-api-18no.onrender.com/api/projects/${projectId}/add-user`,
         {
           method: "POST",
           headers: {
@@ -120,7 +120,7 @@ const ViewProject = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `https://task-manager-9a28.vercel.app/api/projects/${projectId}/add-task`,
+        `https://task-manager-api-18no.onrender.com/api/projects/${projectId}/add-task`,
         {
           method: "POST",
           headers: {
@@ -184,7 +184,7 @@ const ViewProject = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `https://task-manager-9a28.vercel.app/api/projects/tasks/${taskId}/status`,
+        `https://task-manager-api-18no.onrender.com/api/projects/tasks/${taskId}/status`,
         {
           method: "PATCH",
           headers: {

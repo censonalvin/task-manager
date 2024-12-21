@@ -22,7 +22,7 @@ const CreateProject = () => {
         }
 
         // Fetch logged-in user profile
-        const responseProfile = await fetch('http://localhost:3001/api/users/profile', {
+        const responseProfile = await fetch('https://task-manager-api-18no.onrender.com/api/users/profile', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -44,7 +44,7 @@ const CreateProject = () => {
         }
 
         // Fetch all registered users except the logged-in user
-        const responseUsers = await fetch('http://localhost:3001/api/users', {
+        const responseUsers = await fetch('https://task-manager-api-18no.onrender.com/api/users', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -96,7 +96,7 @@ const CreateProject = () => {
       const users = selectedUsers.map(user => user.value);
       const newProject = { name: projectName, users };
 
-      const response = await fetch('https://task-manager-9a28.vercel.app/api/projects', {
+      const response = await fetch('https://task-manager-api-18no.onrender.com//api/projects', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

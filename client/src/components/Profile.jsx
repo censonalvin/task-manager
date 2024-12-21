@@ -12,7 +12,7 @@ const Profile = () => {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:3001/api/users/profile', {
+        const response = await fetch('https://task-manager-api-18no.onrender.com/api/users/profile', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -33,7 +33,7 @@ const Profile = () => {
     const fetchProjects = async (userId) => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`https://task-manager-9a28.vercel.app/api/projects?user=${userId}`, {
+        const response = await fetch(`https://task-manager-api-18no.onrender.com/api/projects?user=${userId}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Access-Control-Allow-Headers':
