@@ -96,7 +96,7 @@ const CreateProject = () => {
       const users = selectedUsers.map(user => user.value);
       const newProject = { name: projectName, users };
 
-      const response = await fetch('https://task-manager-api-18no.onrender.com//api/projects', {
+      const response = await fetch('https://task-manager-api-18no.onrender.com/api/projects', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

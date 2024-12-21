@@ -11,7 +11,7 @@ const Navbar = () => {
     const fetchUserProfile = async () => {
       if (token) {
         try {
-          const response = await fetch('https://task-manager-api-18no.onrender.com//api/users/profile', {
+          const response = await fetch('https://task-manager-api-18no.onrender.com/api/users/profile', {
             headers: {
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json',
