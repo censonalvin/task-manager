@@ -12,7 +12,7 @@ const Profile = () => {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('https://task-manager-9a28.vercel.app/api/users/profile', {
+        const response = await fetch('http://localhost:3001/api/users/profile', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -35,7 +35,13 @@ const Profile = () => {
         const token = localStorage.getItem('token');
         const response = await fetch(`https://task-manager-9a28.vercel.app/api/projects?user=${userId}`, {
           headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'Access-Control-Allow-Headers':
+          'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'OPTIONS,POST',
+          'Access-Control-Allow-Credentials': false,
+          'Access-Control-Allow-Origin': '*',
+          'X-Requested-With': '*'
           }
         });
         const data = await response.json();

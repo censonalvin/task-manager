@@ -25,7 +25,6 @@ const ViewProject = () => {
   });
   const [selectedTask, setSelectedTask] = useState(null);
   const [message, setMessage] = useState("");
-  const [userMessage, setUserMessage] = useState(""); // State for user modal message
   const [showUserModal, setShowUserModal] = useState(false);
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [showTaskDetailModal, setShowTaskDetailModal] = useState(false);
@@ -38,6 +37,12 @@ const ViewProject = () => {
           `https://task-manager-9a28.vercel.app/api/projects/${projectId}`,
           {
             headers: {
+          'Access-Control-Allow-Headers':
+          'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'OPTIONS,POST',
+          'Access-Control-Allow-Credentials': false,
+          'Access-Control-Allow-Origin': '*',
+          'X-Requested-With': '*',
               Authorization: `Bearer ${token}`,
             },
           }
@@ -65,7 +70,13 @@ const ViewProject = () => {
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
+          'Access-Control-Allow-Headers':
+          'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'OPTIONS,POST',
+          'Access-Control-Allow-Credentials': false,
+          'Access-Control-Allow-Origin': '*',
+          'X-Requested-With': '*',
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ email: newUserEmail }),
@@ -74,7 +85,7 @@ const ViewProject = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setUserMessage("User added successfully");
+        setMessage("User added successfully");
         setProject({
           ...project,
           users: [
@@ -90,10 +101,10 @@ const ViewProject = () => {
           window.location.reload();
         }, 3000);
       } else {
-        setUserMessage(data.error || "Failed to add user");
+        setMessage(data.error || "Failed to add user");
       }
     } catch (error) {
-      setUserMessage("Error adding user");
+      setMessage("Error adding user");
     }
   };
 
@@ -114,6 +125,12 @@ const ViewProject = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            'Access-Control-Allow-Headers':
+          'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+          'Access-Control-Allow-Methods': 'OPTIONS,POST',
+          'Access-Control-Allow-Credentials': false,
+          'Access-Control-Allow-Origin': '*',
+          'X-Requested-With': '*',
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(taskData),
@@ -172,6 +189,12 @@ const ViewProject = () => {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            'Access-Control-Allow-Headers':
+            'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST',
+            'Access-Control-Allow-Credentials': false,
+            'Access-Control-Allow-Origin': '*',
+            'X-Requested-With': '*',
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ status }),
@@ -297,10 +320,10 @@ const ViewProject = () => {
               ))}
             </div>
           </Col>
-                </Row>
+        </Row>
       </Container>
 
-      <Modal show={showTaskModal} onHide={() => setShowTaskModal(false)}>
+            <Modal show={showTaskModal} onHide={() => setShowTaskModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Add Task to {project.name}</Modal.Title>
         </Modal.Header>
@@ -412,7 +435,6 @@ const ViewProject = () => {
           <Modal.Title>Add User to {project.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {userMessage && <Alert variant="info">{userMessage}</Alert>}
           <Form onSubmit={handleAddUser}>
             <Form.Group controlId="userEmail" className="mb-3">
               <Form.Label>User Email</Form.Label>
