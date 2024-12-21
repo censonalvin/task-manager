@@ -18,16 +18,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://task-manager-api-18no.onrender.com//api/users/login', {
+      const response = await fetch('https://task-manager-api-18no.onrender.com/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Headers':
-          'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
-          'Access-Control-Allow-Methods': 'OPTIONS,POST',
-          'Access-Control-Allow-Credentials': false,
-          'Access-Control-Allow-Origin': '*',
-          'X-Requested-With': '*',
       },
         body: JSON.stringify(formData),
       });
