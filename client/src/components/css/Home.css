@@ -1,0 +1,140 @@
+.home-container {
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  text-align: center;
+  padding: 0;
+  margin: 0; /* Ensure no margin that could affect full width */
+}
+
+.hero-section {
+  display: flex; /* Use flexbox for layout */
+  height: 100vh; /* Full viewport height */
+}
+
+.hero-image {
+  flex: 1;
+  display: flex; /* Use flexbox to center the content */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100%; /* Ensure the image div is 100% height */
+  background-size: contain; /* Ensure the image fits within the container */
+  background-repeat: no-repeat; /* Prevent image from repeating */
+  background-position: center; /* Center the image within the container */
+}
+
+.hero-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: flex-start; /* Align content to the left */
+  color: black;
+  padding: 2rem;
+}
+
+.hero-title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.hero-button {
+  font-size: 1.25rem;
+  padding: 0.75rem 2rem;
+  background: #6C63FF !important;
+  border: none !important;
+}
+.hero-button:hover {
+  background: #4540a4 !important;
+}
+
+.features-section {
+  padding: 0 2rem;  /* Add padding to left and right */
+  width: 100%;
+  padding-bottom: 6rem;
+  padding-top: 6rem;
+  background: #f4f4f4;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.features-cards {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+}
+
+.feature-image {
+  width: 100%;
+  border-radius: 0.5rem 0.5rem 0 0;
+  display: block;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #666;
+}
+
+.cta-section {
+  /* background: #f4f4f4; */
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.cta-button {
+  font-size: 1.25rem;
+  padding: 0.75rem 2rem;
+  background: #6C63FF !important;
+  border: none !important;
+}
+.cta-button:hover {
+  background: #4540a4 !important;
+}
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column; /* Stack elements vertically */
+  }
+
+  .hero-image {
+    display: none; /* Hide the image on mobile devices */
+  }
+
+  .hero-content {
+    align-items: center; /* Center content horizontally */
+    text-align: center; /* Center text */
+    padding: 1rem;
+  }
+
+  .hero-title {
+    font-size: 2.5rem; /* Adjust title font size */
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem; /* Adjust subtitle font size */
+  }
+}

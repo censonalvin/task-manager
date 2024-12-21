@@ -1,0 +1,105 @@
+.main-content {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.fixed-top-bar {
+  background-color: white;
+  border-bottom: 1px solid #dee2e6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+}
+
+.users-list {
+  margin-top: 40px;
+}
+
+.user-card {
+  transition: transform 0.2s;
+}
+
+.user-card:hover {
+  transform: translateY(-5px);
+}
+
+.user-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.user-info {
+  margin-left: 10px;
+}
+
+.task-column {
+  margin-top: 20px;
+}
+
+.task-list {
+  max-height: 350px;
+  overflow-y: auto;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.task-card {
+  transition: transform 0.2s;
+  cursor: pointer; /* Add pointer cursor on hover */
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+}
+
+.task-column h3 {
+  text-align: center;
+  border-radius: 5px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.modal-header {
+  background-color: #007bff;
+  color: white;
+  border-bottom: none;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 9px 9px 0 0;
+}
+
+.modal-title {
+  margin: auto;
+  font-weight: bold;
+}
+
+.modal-body {
+  padding: 30px;
+}
+
+.modal-footer {
+  border-top: none;
+  padding: 20px 30px;
+  background-color: #f8f9fa;
+  border-radius: 0 0 10px 10px;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}

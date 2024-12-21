@@ -1,0 +1,28 @@
+.long-dash {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.long-dash::before,
+.long-dash::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #ddd;
+  margin: 0 1rem;
+}
+
+.register-link {
+  font-size: 1.5rem; /* Same size as H1 */
+  font-weight: 400;
+  display: block;
+  margin-top: 1rem;
+  text-decoration: none;
+  color: #007bff; /* Ensure this color */
+}
+
+.register-link:hover {
+  text-decoration: underline;
+}

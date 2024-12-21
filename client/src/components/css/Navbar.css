@@ -1,0 +1,13 @@
+.navbar .nav-link.border-success {
+  border-color: #28a745 !important; /* Green color */
+  border-radius: 5px !important; /* Rounded edges */
+}
+.navbar-brand {
+  margin-left: 50px;
+}
+
+.logo-image {
+  height: 100px;
+  width: auto;
+  display: block;
+}
