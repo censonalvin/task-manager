@@ -13,7 +13,7 @@ const ViewProjects = () => {
         const token = localStorage.getItem('token');
         console.log("Token:", token); // Debug log
 
-        const response = await fetch('http://localhost:3001/api/projects', {
+        const response = await fetch('https://task-manager-9a28.vercel.app/api/projects', {
           headers: {
             'Authorization': `Bearer ${token}`,
           },

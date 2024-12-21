@@ -35,7 +35,7 @@ const ViewProject = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await fetch(
-          `http://localhost:3001/api/projects/${projectId}`,
+          `https://task-manager-9a28.vercel.app/api/projects/${projectId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -61,7 +61,7 @@ const ViewProject = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `http://localhost:3001/api/projects/${projectId}/add-user`,
+        `https://task-manager-9a28.vercel.app/api/projects/${projectId}/add-user`,
         {
           method: "POST",
           headers: {
@@ -109,7 +109,7 @@ const ViewProject = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `http://localhost:3001/api/projects/${projectId}/add-task`,
+        `https://task-manager-9a28.vercel.app/api/projects/${projectId}/add-task`,
         {
           method: "POST",
           headers: {
@@ -167,7 +167,7 @@ const ViewProject = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `http://localhost:3001/api/projects/tasks/${taskId}/status`,
+        `https://task-manager-9a28.vercel.app/api/projects/tasks/${taskId}/status`,
         {
           method: "PATCH",
           headers: {
