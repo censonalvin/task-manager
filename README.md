@@ -40,11 +40,11 @@ This Task Manager Application is a portfolio project designed to showcase my ski
 5. Start the development servers:
    - For the backend:
      ```bash
-     cd backend && npm run dev
+     cd server && npm run dev
      ```
    - For the frontend:
      ```bash
-     cd ../frontend && npm start
+     cd client && npm start
      ```
 
 ## Usage
