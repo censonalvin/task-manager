@@ -24,8 +24,8 @@ This Task Manager Application is a portfolio project designed to showcase my ski
 
 3. Install dependencies for both the backend and frontend:
    ```bash
-   cd backend && npm install
-   cd ../frontend && npm install
+   cd server (backend) && npm install
+   cd client (frontend) && npm install
    ```
 
 4. Set up environment variables:
