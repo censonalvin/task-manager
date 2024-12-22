@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Card, Alert, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Card, Alert, Spinner, Button } from 'react-bootstrap';
 import './css/ViewProjects.css';
 
 const ViewProjects = () => {
@@ -16,6 +16,7 @@ const ViewProjects = () => {
         const response = await fetch('https://task-manager-api-18no.onrender.com/api/projects', {
           headers: {
             'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
           },
         });
 
@@ -37,6 +38,43 @@ const ViewProjects = () => {
     fetchProjects();
   }, []);
 
+  const deleteProject = async (projectId) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setMessage('User is not authenticated.');
+        return;
+      }
+  
+      const response = await fetch(`https://task-manager-api-18no.onrender.com/api/projects/deleteProject/${projectId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        setMessage(errorData.error || 'Failed to delete project.');
+        console.error('Delete Error:', errorData);
+        return;
+      }
+  
+      // Parse response only if it's okay
+      const data = await response.json();
+      console.log('Delete Response:', data);
+  
+      // Update the projects state
+      setProjects(prevProjects => prevProjects.filter(project => project._id !== projectId));
+      setMessage('Project deleted successfully');
+    } catch (error) {
+      setMessage('Error deleting project.');
+      console.error('Error:', error);
+    }
+  };
+  
+  
   if (!projects.length && !message) {
     return (
       <Container className="mt-5 view-projects-container">
@@ -56,6 +94,7 @@ const ViewProjects = () => {
               <Card.Body>
                 <Card.Title>{project.name}</Card.Title>
                 <Link to={`/project/${project._id}`} className="btn btn-primary">View Project</Link>
+                <Button variant="danger" onClick={() => deleteProject(project._id)} className="ml-2">Delete</Button>
               </Card.Body>
             </Card>
           </Col>

@@ -160,7 +160,34 @@ const updateTaskStatus = async (req, res, next) => {
     next(error);
   }
 };
+const deleteProject = async (req, res, next) => {
+  try {
+    const projectId = req.params.projectId;
+    console.log("Request to delete project with ID:", projectId); // Debug log
 
+    // Find the project by ID
+    const project = await Project.findById(projectId);
+    if (!project) {
+      console.log("Project not found:", projectId); // Debug log
+      return res.status(404).json({ error: "Project not found" });
+    }
+
+    console.log("Found project:", project); // Debug log
+
+    // Delete all tasks associated with the project
+    const deletedTasks = await Task.deleteMany({ project: projectId });
+    console.log("Deleted tasks:", deletedTasks); // Debug log
+
+    // Delete the project
+    const deletedProject = await Project.findByIdAndDelete(projectId);
+    console.log("Deleted project:", deletedProject); // Debug log
+
+    res.status(200).json({ message: "Project deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting project:", error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 module.exports = {
   createProject,
   getProjectById,
@@ -168,4 +195,5 @@ module.exports = {
   addTaskToProject,
   getProjectsByUser,
   updateTaskStatus,
+  deleteProject,
 };
