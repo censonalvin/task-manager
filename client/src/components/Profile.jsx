@@ -18,7 +18,7 @@ const Profile = () => {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('https://task-manager-api-18no.onrender.com/api/users/profile-with-password', {
+        const response = await fetch('https://task-manager-api-18no.onrender.com/api/users/profile', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -100,7 +100,7 @@ const Profile = () => {
       if (response.ok) {
         setEmailMessage('Email updated successfully');
         setError('');
-        setUser({ ...user, email: newEmail }); // Update the email in the user state
+        setUser({ ...user, email: newEmail });
       } else {
         setEmailMessage('');
         setError(data.error);
@@ -109,13 +109,6 @@ const Profile = () => {
       setEmailMessage('');
       setError('Error updating email');
     }
-  };
-
-  const formatPassword = (password) => {
-    if (!password || password.length <= 3) {
-      return password; // Return the password as is if it's too short or undefined
-    }
-    return `${password.slice(0, 2)}**${password.slice(-1)}`;
   };
 
   if (error) {
@@ -134,7 +127,6 @@ const Profile = () => {
         <ListGroup variant="flush">
           <ListGroup.Item><strong>Name:</strong> {user.name}</ListGroup.Item>
           <ListGroup.Item><strong>Email:</strong> {user.email}</ListGroup.Item>
-          <ListGroup.Item><strong>Password:</strong> {formatPassword(user.password)}</ListGroup.Item>
           <ListGroup.Item>
             <Button variant="secondary" onClick={() => setShowEmailModal(true)}>Change Email</Button>
           </ListGroup.Item>
