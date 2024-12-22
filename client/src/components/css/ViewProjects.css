@@ -1,31 +1,29 @@
 .view-projects-container {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .view-projects-title {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  
-  .project-card {
-    transition: transform 0.2s;
-  }
-  
-  .project-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .btn-primary {
-    background-color: #007bff;
-    border: none;
-  }
-  
-  .btn-primary:hover {
-    background-color: #0056b3;
-  }
-  
+  margin-top: 20px;
+}
+
+.view-projects-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.project-card {
+  margin-bottom: 20px;
+}
+
+.project-card .btn {
+  margin-right: 10px; /* Add gap between buttons */
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}

@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Card, ListGroup, Alert, Row, Col, Spinner } from 'react-bootstrap';
+import { Container, Card, ListGroup, Alert, Row, Col, Spinner, Button, Modal, Form } from 'react-bootstrap';
 import './css/Profile.css';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [projects, setProjects] = useState([]);
   const [error, setError] = useState('');
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [newPassword, setNewPassword] = useState('');
+  const [newEmail, setNewEmail] = useState('');
+  const [passwordMessage, setPasswordMessage] = useState('');
+  const [emailMessage, setEmailMessage] = useState('');
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('https://task-manager-api-18no.onrender.com/api/users/profile', {
+        const response = await fetch('https://task-manager-api-18no.onrender.com/api/users/profile-with-password', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -20,7 +26,6 @@ const Profile = () => {
         const data = await response.json();
         if (response.ok) {
           setUser(data);
-          // Fetch the user's projects
           fetchProjects(data._id);
         } else {
           setError(data.error);
@@ -36,12 +41,7 @@ const Profile = () => {
         const response = await fetch(`https://task-manager-api-18no.onrender.com/api/projects?user=${userId}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Access-Control-Allow-Headers':
-          'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
-          'Access-Control-Allow-Methods': 'OPTIONS,POST',
-          'Access-Control-Allow-Credentials': false,
-          'Access-Control-Allow-Origin': '*',
-          'X-Requested-With': '*'
+            'Content-Type': 'application/json'
           }
         });
         const data = await response.json();
@@ -57,6 +57,66 @@ const Profile = () => {
 
     fetchProfile();
   }, []);
+
+  const handleChangePassword = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('https://task-manager-api-18no.onrender.com/api/users/update-password', {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ password: newPassword })
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setPasswordMessage('Password updated successfully');
+        setError('');
+      } else {
+        setPasswordMessage('');
+        setError(data.error);
+      }
+    } catch (error) {
+      setPasswordMessage('');
+      setError('Error updating password');
+    }
+  };
+
+  const handleChangeEmail = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('https://task-manager-api-18no.onrender.com/api/users/update-email', {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: newEmail })
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setEmailMessage('Email updated successfully');
+        setError('');
+        setUser({ ...user, email: newEmail }); // Update the email in the user state
+      } else {
+        setEmailMessage('');
+        setError(data.error);
+      }
+    } catch (error) {
+      setEmailMessage('');
+      setError('Error updating email');
+    }
+  };
+
+  const formatPassword = (password) => {
+    if (!password || password.length <= 3) {
+      return password; // Return the password as is if it's too short or undefined
+    }
+    return `${password.slice(0, 2)}**${password.slice(-1)}`;
+  };
 
   if (error) {
     return <Container className="mt-5"><Alert variant="danger">{error}</Alert></Container>;
@@ -74,7 +134,13 @@ const Profile = () => {
         <ListGroup variant="flush">
           <ListGroup.Item><strong>Name:</strong> {user.name}</ListGroup.Item>
           <ListGroup.Item><strong>Email:</strong> {user.email}</ListGroup.Item>
-          {/* Add more user fields here if needed */}
+          <ListGroup.Item><strong>Password:</strong> {formatPassword(user.password)}</ListGroup.Item>
+          <ListGroup.Item>
+            <Button variant="secondary" onClick={() => setShowEmailModal(true)}>Change Email</Button>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <Button variant="secondary" onClick={() => setShowPasswordModal(true)}>Change Password</Button>
+          </ListGroup.Item>
         </ListGroup>
       </Card>
 
@@ -97,6 +163,56 @@ const Profile = () => {
           </Col>
         )}
       </Row>
+
+      {/* Change Password Modal */}
+      <Modal show={showPasswordModal} onHide={() => setShowPasswordModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Change Password</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {passwordMessage && <Alert variant="success">{passwordMessage}</Alert>}
+          <Form>
+            <Form.Group controlId="formNewPassword">
+              <Form.Label>New Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter new password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowPasswordModal(false)}>Close</Button>
+          <Button variant="primary" onClick={handleChangePassword}>Save Changes</Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Change Email Modal */}
+      <Modal show={showEmailModal} onHide={() => setShowEmailModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Change Email</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {emailMessage && <Alert variant="success">{emailMessage}</Alert>}
+          <Form>
+            <Form.Group controlId="formNewEmail">
+              <Form.Label>New Email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter new email"
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowEmailModal(false)}>Close</Button>
+          <Button variant="primary" onClick={handleChangeEmail}>Save Changes</Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

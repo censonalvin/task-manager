@@ -51,9 +51,21 @@ const getUserProfile = async (req, res, next) => {
   }
 };
 
+const getUserWithPassword = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getAllUsers = async (req, res, next) => {
   try {
-    const users = await User.find().select('-password'); // Exclude passwords from the response
+    const users = await User.find().select('-password');
     res.status(200).json(users);
   } catch (error) {
     next(error);
@@ -104,6 +116,7 @@ module.exports = {
   register,
   login,
   getUserProfile,
+  getUserWithPassword,
   getAllUsers,
   updatePassword,
   updateEmail,

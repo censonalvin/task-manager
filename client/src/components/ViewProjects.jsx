@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Card, Alert, Spinner, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Alert, Button } from 'react-bootstrap';
 import './css/ViewProjects.css';
 
 const ViewProjects = () => {
@@ -20,6 +20,7 @@ const ViewProjects = () => {
           },
         });
 
+        console.log("Fetch response status:", response.status); // Debug log
         const data = await response.json();
         console.log("API Response:", data); // Debug log
 
@@ -28,6 +29,7 @@ const ViewProjects = () => {
           console.log("Fetched projects:", data); // Debug log
         } else {
           setMessage(data.error || 'Failed to fetch projects');
+          console.error("Fetch error message:", data.error || 'Failed to fetch projects'); // Debug log
         }
       } catch (error) {
         setMessage('Error fetching projects');
@@ -45,7 +47,7 @@ const ViewProjects = () => {
         setMessage('User is not authenticated.');
         return;
       }
-  
+
       const response = await fetch(`https://task-manager-api-18no.onrender.com/api/projects/deleteProject/${projectId}`, {
         method: 'DELETE',
         headers: {
@@ -53,18 +55,18 @@ const ViewProjects = () => {
           'Content-Type': 'application/json',
         },
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         setMessage(errorData.error || 'Failed to delete project.');
         console.error('Delete Error:', errorData);
         return;
       }
-  
+
       // Parse response only if it's okay
       const data = await response.json();
       console.log('Delete Response:', data);
-  
+
       // Update the projects state
       setProjects(prevProjects => prevProjects.filter(project => project._id !== projectId));
       setMessage('Project deleted successfully');
@@ -73,20 +75,16 @@ const ViewProjects = () => {
       console.error('Error:', error);
     }
   };
-  
-  
-  if (!projects.length && !message) {
-    return (
-      <Container className="mt-5 view-projects-container">
-        <Spinner animation="border" variant="primary" />
-      </Container>
-    );
-  }
+
+
 
   return (
     <Container className="mt-5 view-projects-container">
       <h2 className="view-projects-title">Projects</h2>
       {message && <Alert variant="info">{message}</Alert>}
+      {projects.length === 0 && !message && (
+        <Alert variant="info">No projects found.</Alert>
+      )}
       <Row>
         {projects.map((project) => (
           <Col md={4} key={project._id}>
@@ -100,9 +98,6 @@ const ViewProjects = () => {
           </Col>
         ))}
       </Row>
-      {projects.length === 0 && (
-        <Alert variant="info">No projects found.</Alert>
-      )}
     </Container>
   );
 };

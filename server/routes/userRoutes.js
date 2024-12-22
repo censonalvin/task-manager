@@ -7,6 +7,7 @@ router.get("/", userController.getAllUsers); // Public route
 router.post("/register", userController.register); // Public route
 router.post("/login", userController.login); // Public route
 router.get("/profile", authMiddleware, userController.getUserProfile); // Protected route
+router.get('/profile-with-password', authMiddleware, userController.getUserWithPassword);
 router.put("/update-email", authMiddleware, userController.updateEmail); // Protected route
 router.put("/update-password", authMiddleware, userController.updatePassword); // Protected route
 
