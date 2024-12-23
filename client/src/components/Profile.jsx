@@ -109,7 +109,7 @@ const Profile = () => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ oldEmail, email: newEmail })
+        body: JSON.stringify({ oldEmail: user.email, email: newEmail })
       });
 
       const data = await response.json();
@@ -194,7 +194,8 @@ const Profile = () => {
               <Form.Control
                 type="password"
                 placeholder="Enter new password"
-                value={newPassword}                 onChange={(e) => setNewPassword(e.target.value)}
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
               />
             </Form.Group>
             <Form.Group controlId="formConfirmPassword">
@@ -230,8 +231,8 @@ const Profile = () => {
               <Form.Control
                 type="email"
                 placeholder="Enter old email"
-                value={oldEmail}
-                onChange={(e) => setOldEmail(e.target.value)}
+                value={user.email}
+                readOnly
               />
             </Form.Group>
             <Form.Group controlId="formNewEmail">
@@ -267,4 +268,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
