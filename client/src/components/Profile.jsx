@@ -9,8 +9,12 @@ const Profile = () => {
   const [error, setError] = useState('');
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
+  const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [oldEmail, setOldEmail] = useState('');
   const [newEmail, setNewEmail] = useState('');
+  const [confirmEmail, setConfirmEmail] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
 
@@ -59,6 +63,12 @@ const Profile = () => {
   }, []);
 
   const handleChangePassword = async () => {
+    if (newPassword !== confirmPassword) {
+      setPasswordMessage('');
+      setError('Passwords do not match');
+      return;
+    }
+
     try {
       const token = localStorage.getItem('token');
       const response = await fetch('https://task-manager-api-18no.onrender.com/api/users/update-password', {
@@ -67,7 +77,7 @@ const Profile = () => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ password: newPassword })
+        body: JSON.stringify({ oldPassword, password: newPassword })
       });
 
       const data = await response.json();
@@ -85,6 +95,12 @@ const Profile = () => {
   };
 
   const handleChangeEmail = async () => {
+    if (newEmail !== confirmEmail) {
+      setEmailMessage('');
+      setError('Emails do not match');
+      return;
+    }
+
     try {
       const token = localStorage.getItem('token');
       const response = await fetch('https://task-manager-api-18no.onrender.com/api/users/update-email', {
@@ -93,7 +109,7 @@ const Profile = () => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email: newEmail })
+        body: JSON.stringify({ oldEmail, email: newEmail })
       });
 
       const data = await response.json();
@@ -164,14 +180,34 @@ const Profile = () => {
         <Modal.Body>
           {passwordMessage && <Alert variant="success">{passwordMessage}</Alert>}
           <Form>
+            <Form.Group controlId="formOldPassword">
+              <Form.Label>Old Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter old password"
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+              />
+            </Form.Group>
             <Form.Group controlId="formNewPassword">
               <Form.Label>New Password</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Enter new password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
+                value={newPassword}                 onChange={(e) => setNewPassword(e.target.value)}
               />
+            </Form.Group>
+            <Form.Group controlId="formConfirmPassword">
+              <Form.Label>Confirm New Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Confirm new password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              {newPassword && confirmPassword && newPassword !== confirmPassword && (
+                <Alert variant="danger" className="mt-2">Passwords do not match</Alert>
+              )}
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -189,6 +225,15 @@ const Profile = () => {
         <Modal.Body>
           {emailMessage && <Alert variant="success">{emailMessage}</Alert>}
           <Form>
+            <Form.Group controlId="formOldEmail">
+              <Form.Label>Old Email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter old email"
+                value={oldEmail}
+                onChange={(e) => setOldEmail(e.target.value)}
+              />
+            </Form.Group>
             <Form.Group controlId="formNewEmail">
               <Form.Label>New Email</Form.Label>
               <Form.Control
@@ -197,6 +242,18 @@ const Profile = () => {
                 value={newEmail}
                 onChange={(e) => setNewEmail(e.target.value)}
               />
+            </Form.Group>
+            <Form.Group controlId="formConfirmEmail">
+              <Form.Label>Confirm New Email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Confirm new email"
+                value={confirmEmail}
+                onChange={(e) => setConfirmEmail(e.target.value)}
+              />
+              {newEmail && confirmEmail && newEmail !== confirmEmail && (
+                <Alert variant="danger" className="mt-2">Emails do not match</Alert>
+              )}
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -210,3 +267,4 @@ const Profile = () => {
 };
 
 export default Profile;
+
